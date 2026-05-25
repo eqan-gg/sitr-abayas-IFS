@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { Layout } from "@/components/Layout";
+import { StoreProvider } from "@/lib/store";
 
 function NotFoundComponent() {
   return (
@@ -72,14 +74,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Noor — Modern Modest Fashion, Made With Intention" },
+      { name: "description", content: "Noor is a luxury modest fashion house crafting elegant abayas, hijabs and jilbabs in small batches. Worldwide shipping." },
+      { name: "author", content: "Noor" },
+      { property: "og:title", content: "Noor — Modern Modest Fashion" },
+      { property: "og:description", content: "Considered modest fashion, made with intention." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@noor" },
     ],
     links: [
       {
@@ -113,7 +115,11 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <StoreProvider>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </StoreProvider>
     </QueryClientProvider>
   );
 }
