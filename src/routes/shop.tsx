@@ -67,7 +67,7 @@ function ShopPage() {
             <li key={slug}>
               <Link
                 to="/shop"
-                search={(prev) => ({ ...prev, cat: slug || undefined })}
+                search={(prev: Search) => ({ ...prev, cat: slug || undefined })}
                 className={cn("hover:text-ink transition", (cat ?? "") === slug ? "text-ink font-medium" : "text-muted-foreground")}
               >
                 {label}
