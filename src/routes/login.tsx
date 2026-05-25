@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { BRAND, pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
-  head: () => ({ meta: [{ title: "Sign In — Noor" }] }),
+  head: () => ({ meta: [{ title: pageTitle("Sign In") }] }),
 });
 
 function LoginPage() {
@@ -13,7 +14,7 @@ function LoginPage() {
       <div className="text-center mb-10">
         <h1 className="font-serif text-4xl">{mode === "signin" ? "Welcome back" : "Create account"}</h1>
         <p className="text-sm text-muted-foreground mt-2">
-          {mode === "signin" ? "Sign in to your Noor account" : "Join the Noor private list"}
+          {mode === "signin" ? `Sign in to your ${BRAND.name} account` : `Join the ${BRAND.name} private list`}
         </p>
       </div>
       <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
@@ -49,7 +50,7 @@ function LoginPage() {
         </div>
       </form>
       <p className="text-center text-sm text-muted-foreground mt-8">
-        {mode === "signin" ? "New to Noor? " : "Already have an account? "}
+        {mode === "signin" ? `New to ${BRAND.name}? ` : "Already have an account? "}
         <button onClick={() => setMode(mode === "signin" ? "signup" : "signin")} className="text-ink underline underline-offset-4">
           {mode === "signin" ? "Create an account" : "Sign in"}
         </button>

@@ -11,6 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { Layout } from "@/components/Layout";
 import { StoreProvider } from "@/lib/store";
+import { BRAND, pageTitle } from "@/lib/brand";
 
 function NotFoundComponent() {
   return (
@@ -74,14 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Noor — Modern Modest Fashion, Made With Intention" },
-      { name: "description", content: "Noor is a luxury modest fashion house crafting elegant abayas, hijabs and jilbabs in small batches. Worldwide shipping." },
-      { name: "author", content: "Noor" },
-      { property: "og:title", content: "Noor — Modern Modest Fashion" },
-      { property: "og:description", content: "Considered modest fashion, made with intention." },
+      { title: pageTitle() },
+      { name: "description", content: BRAND.description },
+      { name: "author", content: BRAND.name },
+      { property: "og:title", content: pageTitle() },
+      { property: "og:description", content: BRAND.tagline },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@noor" },
+      { name: "twitter:site", content: BRAND.instagram },
     ],
     links: [
       {

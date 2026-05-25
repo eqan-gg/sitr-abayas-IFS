@@ -3,13 +3,14 @@ import { motion } from "motion/react";
 import editorial from "@/assets/editorial-1.jpg";
 import hero from "@/assets/hero-1.jpg";
 import fabric from "@/assets/category-fabric.jpg";
+import { BRAND, pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
   head: () => ({
     meta: [
-      { title: "Our Story — Noor" },
-      { name: "description", content: "Noor is a modest fashion atelier crafting considered abayas, hijabs and jilbabs in small batches with global reach." },
+      { title: pageTitle("Our Story") },
+      { name: "description", content: `${BRAND.name} is a modest fashion atelier crafting considered abayas, hijabs and jilbabs in small batches with global reach.` },
     ],
   }),
 });
@@ -23,7 +24,7 @@ function AboutPage() {
         <div className="relative h-full flex items-end p-8 md:p-16">
           <motion.h1
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl text-cream leading-[0.95]"
+            className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-cream leading-[0.95]"
           >
             Made with<br/>intention.
           </motion.h1>
@@ -36,7 +37,7 @@ function AboutPage() {
           A wardrobe for the women who choose modesty without compromise.
         </h2>
         <p className="mt-7 text-muted-foreground leading-relaxed">
-          Noor was born in a small atelier with a single idea — that modest fashion deserves
+          {BRAND.name} was born in a small atelier with a single idea — that modest fashion deserves
           the same care, craft and confidence as the finest houses in the world.
           We design pieces that move with you, made from fabrics chosen
           for their fall, their weight, their kindness to the skin.
@@ -45,11 +46,11 @@ function AboutPage() {
 
       {[
         { img: hero, eyebrow: "The Founder", title: "Begun by hand, in one room.",
-          body: "Our founder began Noor with a sewing machine, a small bolt of crepe, and a single belief — that the modest woman should never have to choose between modesty and design." },
+          body: `Our founder began ${BRAND.name} with a sewing machine, a small bolt of crepe, and a single belief — that the modest woman should never have to choose between modesty and design.` },
         { img: fabric, eyebrow: "Our Fabric", title: "Considered to the last thread.", reverse: true,
           body: "Each season we travel to source crepes, silks and chiffons from mills with decades of practice. We sample, drape, and reject more than we keep. What you wear is the quiet result." },
         { img: editorial, eyebrow: "Personal Tailoring", title: "Made to your measurements.",
-          body: "Every Noor piece is offered with complimentary alterations. Tell us your measurements; we tailor each abaya so it falls precisely as it should." },
+          body: `Every ${BRAND.name} piece is offered with complimentary alterations. Tell us your measurements; we tailor each abaya so it falls precisely as it should.` },
       ].map((s, i) => (
         <section key={i} className={`grid md:grid-cols-2 items-stretch ${s.reverse ? "" : ""}`}>
           <div className={`min-h-[380px] md:min-h-[560px] relative overflow-hidden ${s.reverse ? "md:order-2" : ""}`}>

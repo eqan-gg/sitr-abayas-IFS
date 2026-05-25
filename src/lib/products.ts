@@ -27,8 +27,8 @@ export type Product = {
 export const products: Product[] = [
   {
     id: "1",
-    slug: "noor-open-abaya-camel",
-    title: "Noor Open Abaya — Camel",
+    slug: "sitr-open-abaya-camel",
+    title: "Open Abaya — Camel",
     category: "abayas",
     price: 14800,
     salePrice: 11900,

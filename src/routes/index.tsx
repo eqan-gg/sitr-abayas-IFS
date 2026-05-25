@@ -8,13 +8,14 @@ import { ProductCard } from "@/components/ProductCard";
 import { QuickView } from "@/components/QuickView";
 import heroImg from "@/assets/hero-1.jpg";
 import fabric from "@/assets/category-fabric.jpg";
+import { BRAND, pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "Noor — Considered Modest Fashion" },
-      { name: "description", content: "Discover Noor's premium edit of abayas, hijabs and jilbabs. Free shipping over Rs 15,000." },
+      { title: pageTitle("Considered Modest Fashion") },
+      { name: "description", content: `Discover ${BRAND.name}'s premium edit of abayas, hijabs and jilbabs. Free shipping over Rs 15,000.` },
     ],
   }),
 });
@@ -29,7 +30,7 @@ function HomePage() {
       {/* HERO */}
       <section className="relative bg-secondary/40">
         <div className="grid md:grid-cols-2 min-h-[78vh] md:min-h-[88vh]">
-          <div className="order-2 md:order-1 flex items-center px-6 md:px-16 lg:px-24 py-16">
+          <div className="order-2 md:order-1 flex items-center px-4 sm:px-6 md:px-16 lg:px-24 py-12 sm:py-16">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -39,7 +40,7 @@ function HomePage() {
               <span className="inline-block text-[11px] uppercase tracking-[0.32em] text-muted-foreground">
                 The Ramadan Edit · 2026
               </span>
-              <h1 className="mt-5 font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.02]">
+              <h1 className="mt-5 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02]">
                 Elegance,<br />quietly worn.
               </h1>
               <p className="mt-6 text-base text-muted-foreground leading-relaxed max-w-md">
@@ -67,10 +68,10 @@ function HomePage() {
             transition={{ duration: 1.3, ease: "easeOut" }}
             className="order-1 md:order-2 relative min-h-[55vh] md:min-h-full overflow-hidden"
           >
-            <img src={heroImg} alt="Model wearing Noor abaya" className="absolute inset-0 w-full h-full object-cover" />
-            <div className="hidden md:block absolute bottom-6 right-6 bg-background/85 backdrop-blur px-5 py-4 max-w-[220px]">
+            <img src={heroImg} alt={`Model wearing ${BRAND.name} abaya`} className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 bg-background/90 backdrop-blur px-4 py-3 sm:px-5 sm:py-4 max-w-full sm:max-w-[220px]">
               <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Look 01</div>
-              <div className="font-serif text-lg mt-1">Noor Open Abaya</div>
+              <div className="font-serif text-base sm:text-lg mt-1">Open Abaya — Camel</div>
               <div className="text-xs mt-0.5">{formatPKR(11900)}</div>
             </div>
           </motion.div>
@@ -172,7 +173,7 @@ function HomePage() {
         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {[
             { q: "The cut, the fabric, the fall — everything feels considered. I haven't worn anything else in weeks.", n: "Aisha M.", l: "London" },
-            { q: "Modest fashion that doesn't compromise. The Noor abaya is now a wardrobe staple I can't imagine living without.", n: "Sara K.", l: "Dubai" },
+            { q: `Modest fashion that doesn't compromise. My ${BRAND.name} abaya is now a wardrobe staple I can't imagine living without.`, n: "Sara K.", l: "Dubai" },
             { q: "Beautifully packaged, beautifully made. The silk hijab is the softest I've ever owned.", n: "Maryam A.", l: "Kuala Lumpur" },
           ].map((t, i) => (
             <motion.figure
@@ -197,7 +198,7 @@ function HomePage() {
       <section className="max-w-[1400px] mx-auto px-5 md:px-10 pb-20 md:pb-28">
         <div className="text-center mb-10">
           <Instagram className="w-5 h-5 mx-auto" />
-          <h3 className="font-serif text-2xl md:text-3xl mt-3">@noor.modest</h3>
+          <h3 className="font-serif text-xl sm:text-2xl md:text-3xl mt-3">{BRAND.instagram}</h3>
           <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mt-2">Follow our journal</p>
         </div>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-1.5">

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useStore } from "@/lib/store";
 import { products, formatPKR } from "@/lib/products";
 import { cn } from "@/lib/utils";
+import { BRAND, whatsAppUrl } from "@/lib/brand";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -57,7 +58,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
             exit={{ y: -40, opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-background border-b border-border px-6 md:px-12 py-10"
+            className="bg-background border-b border-border px-4 sm:px-6 md:px-12 py-6 sm:py-10 max-h-[85dvh] overflow-y-auto"
           >
             <div className="max-w-3xl mx-auto">
               <div className="flex items-center gap-4 border-b border-ink/20 pb-3">
@@ -67,7 +68,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                   placeholder="Search for abayas, hijabs..."
-                  className="flex-1 bg-transparent outline-none text-2xl md:text-3xl font-serif placeholder:text-ink/30"
+                  className="flex-1 min-w-0 bg-transparent outline-none text-xl sm:text-2xl md:text-3xl font-serif placeholder:text-ink/30"
                 />
                 <button onClick={onClose} className="text-ink/60 hover:text-ink"><X className="w-5 h-5" /></button>
               </div>
@@ -135,7 +136,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             className="fixed top-0 left-0 bottom-0 z-[71] w-[85%] max-w-sm bg-background flex flex-col"
           >
             <div className="flex items-center justify-between p-5 border-b border-border">
-              <span className="font-serif text-2xl tracking-wide">NOOR</span>
+              <span className="font-serif text-lg sm:text-xl tracking-wide">{BRAND.name}</span>
               <button onClick={onClose}><X className="w-5 h-5" /></button>
             </div>
             <nav className="flex-1 overflow-auto p-5 space-y-1">
@@ -181,8 +182,8 @@ function Navbar() {
         "sticky top-0 z-50 bg-background/85 backdrop-blur-md transition-all",
         scrolled ? "border-b border-border shadow-[0_1px_0_rgba(0,0,0,0.02)]" : ""
       )}>
-        <div className="max-w-[1400px] mx-auto px-5 md:px-10">
-          <div className="grid grid-cols-3 items-center h-16 md:h-20">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-5 md:px-10">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-14 sm:h-16 md:h-20 gap-2">
             <div className="flex items-center gap-4">
               <button className="lg:hidden" onClick={() => setMenuOpen(true)} aria-label="Menu">
                 <Menu className="w-5 h-5" />
@@ -202,8 +203,11 @@ function Navbar() {
               </nav>
             </div>
 
-            <Link to="/" className="justify-self-center font-serif text-2xl md:text-3xl tracking-[0.25em]">
-              NOOR
+            <Link
+              to="/"
+              className="justify-self-center font-serif text-sm sm:text-lg md:text-2xl tracking-[0.08em] sm:tracking-[0.15em] md:tracking-[0.2em] text-center leading-tight px-1"
+            >
+              {BRAND.name}
             </Link>
 
             <div className="flex items-center justify-end gap-4 md:gap-5">
@@ -242,16 +246,16 @@ function Navbar() {
 function Footer() {
   return (
     <footer className="mt-24 bg-ink text-cream">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-20 grid gap-12 md:grid-cols-4">
-        <div>
-          <div className="font-serif text-3xl tracking-[0.25em]">NOOR</div>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-20 grid gap-10 sm:gap-12 grid-cols-2 md:grid-cols-4">
+        <div className="col-span-2 md:col-span-1">
+          <div className="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.12em] sm:tracking-[0.2em]">{BRAND.name}</div>
           <p className="mt-4 text-sm text-cream/60 leading-relaxed max-w-xs">
-            Considered modest fashion, made with intention. Crafted in small batches, shipped worldwide.
+            {BRAND.tagline} Crafted in small batches, shipped worldwide.
           </p>
         </div>
         {[
           { h: "Shop", l: ["New Arrivals", "Abayas", "Hijabs", "Jilbabs", "Naqab", "Sale"] },
-          { h: "House of Noor", l: ["Our Story", "Atelier", "Journal", "Sustainability"] },
+          { h: BRAND.name, l: ["Our Story", "Atelier", "Journal", "Sustainability"] },
           { h: "Support", l: ["Contact", "Shipping", "Returns", "Size Guide", "FAQ"] },
         ].map((c) => (
           <div key={c.h}>
@@ -264,7 +268,7 @@ function Footer() {
       </div>
       <div className="border-t border-cream/10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-cream/50">
-          <span>© {new Date().getFullYear()} Noor Modest Fashion. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</span>
           <div className="flex gap-5"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
         </div>
       </div>
@@ -275,14 +279,14 @@ function Footer() {
 function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/923000000000?text=Hello%20Noor%2C%20I%27d%20like%20to%20enquire."
+      href={whatsAppUrl(`Hello ${BRAND.name}, I'd like to enquire.`)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="fixed bottom-5 right-5 z-50 group"
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-50 group"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366]/30 animate-ping" />
-      <span className="relative grid place-items-center w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform">
+      <span className="relative grid place-items-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform">
         <svg viewBox="0 0 24 24" className="w-7 h-7" fill="currentColor">
           <path d="M20.52 3.48A11.85 11.85 0 0012.06 0C5.5 0 .17 5.32.17 11.88c0 2.1.55 4.13 1.6 5.93L0 24l6.34-1.66a11.86 11.86 0 005.72 1.46h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.18-1.24-6.17-3.43-8.44zM12.07 21.5h-.01a9.6 9.6 0 01-4.9-1.34l-.35-.21-3.76.98 1-3.66-.23-.38a9.59 9.59 0 01-1.47-5.01c0-5.31 4.32-9.63 9.64-9.63a9.6 9.6 0 016.81 2.82 9.55 9.55 0 012.83 6.82c0 5.32-4.33 9.64-9.65 9.64zm5.29-7.22c-.29-.15-1.72-.85-1.98-.94-.27-.1-.46-.15-.66.15s-.75.94-.92 1.14c-.17.19-.34.22-.63.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.49-.5-.66-.5l-.56-.01c-.19 0-.51.07-.78.36-.27.29-1.02 1-1.02 2.44s1.05 2.82 1.2 3.02c.15.19 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.61.7.22 1.34.19 1.85.12.56-.08 1.72-.7 1.97-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.19-.56-.34z"/>
         </svg>
@@ -295,7 +299,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   useEffect(() => { window.scrollTo({ top: 0 }); }, [path]);
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-clip">
       <AnnouncementBar />
       <Navbar />
       <main className="flex-1">{children}</main>

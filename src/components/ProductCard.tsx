@@ -60,7 +60,7 @@ export function ProductCard({ product, onQuickView }: { product: Product; onQuic
 
       <div className="mt-4 px-1">
         <Link to="/product/$slug" params={{ slug: product.slug }} className="block">
-          <h3 className="text-[15px] font-serif leading-tight">{product.title}</h3>
+          <h3 className="text-sm sm:text-[15px] font-serif leading-tight line-clamp-2">{product.title}</h3>
         </Link>
         <div className="mt-1.5 flex items-center gap-2 text-sm">
           {product.salePrice ? (

@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useStore } from "@/lib/store";
 import { products } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/wishlist")({
   component: WishlistPage,
-  head: () => ({ meta: [{ title: "Wishlist — Noor" }] }),
+  head: () => ({ meta: [{ title: pageTitle("Wishlist") }] }),
 });
 
 function WishlistPage() {

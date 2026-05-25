@@ -6,6 +6,7 @@ import { products } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
 import { QuickView } from "@/components/QuickView";
 import { cn } from "@/lib/utils";
+import { pageTitle } from "@/lib/brand";
 
 type Search = { cat?: string; sort?: string };
 
@@ -17,7 +18,7 @@ export const Route = createFileRoute("/shop")({
   component: ShopPage,
   head: () => ({
     meta: [
-      { title: "Shop — Noor Modest Fashion" },
+      { title: pageTitle("Shop") },
       { name: "description", content: "Explore our edit of premium modest fashion: abayas, hijabs, jilbabs, naqab and everyday essentials." },
     ],
   }),
@@ -124,7 +125,7 @@ function ShopPage() {
       <section className="border-b border-border bg-secondary/30">
         <div className="max-w-[1400px] mx-auto px-5 md:px-10 py-14 md:py-20">
           <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Collection</span>
-          <h1 className="font-serif text-4xl md:text-6xl mt-3">{title}</h1>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl mt-3">{title}</h1>
           <p className="mt-3 text-sm text-muted-foreground">{list.length} pieces</p>
         </div>
       </section>

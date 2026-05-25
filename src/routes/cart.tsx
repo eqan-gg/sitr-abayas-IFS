@@ -3,10 +3,11 @@ import { Minus, Plus, X } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { formatPKR, products } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
+import { pageTitle } from "@/lib/brand";
 
 export const Route = createFileRoute("/cart")({
   component: CartPage,
-  head: () => ({ meta: [{ title: "Your Bag — Noor" }] }),
+  head: () => ({ meta: [{ title: pageTitle("Your Bag") }] }),
 });
 
 function CartPage() {
@@ -24,10 +25,10 @@ function CartPage() {
             <Link to="/shop" className="mt-6 inline-block bg-ink text-cream px-8 py-4 text-xs uppercase tracking-[0.25em]">Continue Shopping</Link>
           </div>
         ) : (
-          <div className="mt-10 grid md:grid-cols-[1fr_380px] gap-12">
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-12">
             <ul className="divide-y divide-border">
               {cart.map((item, i) => (
-                <li key={i} className="py-6 flex gap-5">
+                <li key={i} className="py-6 flex gap-3 sm:gap-5">
                   <Link to="/product/$slug" params={{ slug: item.slug }} className="block w-24 md:w-32 shrink-0">
                     <img src={item.image} alt={item.title} className="aspect-[4/5] w-full object-cover" />
                   </Link>
@@ -52,7 +53,7 @@ function CartPage() {
               ))}
             </ul>
 
-            <aside className="bg-secondary/40 p-6 md:p-8 h-fit sticky top-28">
+            <aside className="bg-secondary/40 p-5 sm:p-6 md:p-8 h-fit lg:sticky lg:top-28">
               <h2 className="font-serif text-2xl mb-6">Order Summary</h2>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>{formatPKR(subtotal)}</span></div>

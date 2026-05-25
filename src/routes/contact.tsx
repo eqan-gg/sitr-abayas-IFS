@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { BRAND, pageTitle, whatsAppUrl } from "@/lib/brand";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
   head: () => ({
     meta: [
-      { title: "Contact — Noor" },
+      { title: pageTitle("Contact") },
       { name: "description", content: "Reach our atelier team — we reply within one business day." },
     ],
   }),
@@ -58,8 +59,8 @@ function ContactPage() {
 
         <div className="space-y-8">
           {[
-            { Icon: MessageCircle, h: "WhatsApp", l: "+92 300 000 0000", href: "https://wa.me/923000000000" },
-            { Icon: Mail, h: "Email", l: "atelier@noor.com", href: "mailto:atelier@noor.com" },
+            { Icon: MessageCircle, h: "WhatsApp", l: "+92 300 000 0000", href: whatsAppUrl(`Hello ${BRAND.name}`) },
+            { Icon: Mail, h: "Email", l: BRAND.email, href: `mailto:${BRAND.email}` },
             { Icon: Phone, h: "Phone", l: "+92 21 0000 000", href: "tel:+92210000000" },
             { Icon: MapPin, h: "Atelier", l: "Plot 24, Khayaban-e-Shahbaz, Karachi", href: "#" },
           ].map(({ Icon, h, l, href }) => (
@@ -89,7 +90,7 @@ function ContactPage() {
         <iframe
           title="Atelier location"
           src="https://www.openstreetmap.org/export/embed.html?bbox=67.0%2C24.85%2C67.08%2C24.91&layer=mapnik"
-          className="w-full h-[360px] border border-border"
+          className="w-full h-[240px] sm:h-[320px] md:h-[360px] border border-border"
           loading="lazy"
         />
       </section>
