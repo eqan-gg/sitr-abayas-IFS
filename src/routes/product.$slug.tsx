@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDown, Heart, ShieldCheck, Star, Truck } from "lucide-react";
-import { findProduct, formatPKR, products } from "@/lib/products";
+import { findProduct, formatPKR, products, type Product } from "@/lib/products";
 import { useStore } from "@/lib/store";
 import { ProductCard } from "@/components/ProductCard";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ function Accordion({ title, children, defaultOpen }: { title: string; children: 
 }
 
 function ProductPage() {
-  const p = Route.useLoaderData();
+  const p = Route.useLoaderData() as Product;
   const [activeImg, setActiveImg] = useState(0);
   const [size, setSize] = useState<string | null>(null);
   const [color, setColor] = useState<string | null>(p.colors[0]?.name ?? null);
