@@ -4,16 +4,15 @@ import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useStore } from "@/lib/store";
 import { products, formatPKR } from "@/lib/products";
+import { shopCategories, customizedCategory } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 import { BRAND, whatsAppUrl } from "@/lib/brand";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { ShopNavMenu, ShopNavLinks } from "@/components/ShopNavMenu";
 
-const NAV = [
+const NAV_MAIN = [
   { to: "/", label: "Home" },
-  { to: "/shop?cat=new", label: "New Arrivals" },
-  { to: "/shop?cat=abayas", label: "Abayas" },
-  { to: "/shop?cat=hijabs", label: "Hijabs" },
-  { to: "/shop?cat=jilbabs", label: "Jilbabs" },
-  { to: "/shop?cat=everyday", label: "Everyday" },
+  { to: "/shop", search: { cat: "new" as const }, label: "New Arrivals" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
@@ -27,7 +26,7 @@ const ANNOUNCEMENTS = [
 
 function AnnouncementBar() {
   return (
-    <div className="bg-ink text-cream text-[11px] tracking-[0.18em] uppercase overflow-hidden">
+    <div className="bg-primary text-primary-foreground text-[11px] tracking-[0.18em] uppercase overflow-hidden">
       <div className="flex marquee whitespace-nowrap py-2.5">
         {[...ANNOUNCEMENTS, ...ANNOUNCEMENTS].map((a, i) => (
           <span key={i} className="px-10 inline-flex items-center gap-3">
@@ -67,7 +66,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
                   autoFocus
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search for abayas, hijabs..."
+                  placeholder="Search abayas by name..."
                   className="flex-1 min-w-0 bg-transparent outline-none text-xl sm:text-2xl md:text-3xl font-serif placeholder:text-ink/30"
                 />
                 <button onClick={onClose} className="text-ink/60 hover:text-ink"><X className="w-5 h-5" /></button>
@@ -78,7 +77,7 @@ function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }
                 )}
                 {!q && (
                   <div className="flex flex-wrap gap-2">
-                    {["Open Abaya", "Silk Hijab", "Ramadan Edit", "Jilbab", "Naqab"].map((t) => (
+                    {["Open Abaya", "Formal", "University", "Wedding Guest", "Premium"].map((t) => (
                       <button
                         key={t}
                         onClick={() => setQ(t)}
@@ -135,15 +134,23 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             transition={{ type: "tween", duration: 0.3 }}
             className="fixed top-0 left-0 bottom-0 z-[71] w-[85%] max-w-sm bg-background flex flex-col"
           >
-            <div className="flex items-center justify-between p-5 border-b border-border">
+            <div className="flex items-center justify-between p-5 border-b border-border gap-3">
               <span className="font-serif text-lg sm:text-xl tracking-wide">{BRAND.name}</span>
-              <button onClick={onClose}><X className="w-5 h-5" /></button>
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
+                <button onClick={onClose} aria-label="Close menu"><X className="w-5 h-5" /></button>
+              </div>
             </div>
             <nav className="flex-1 overflow-auto p-5 space-y-1">
-              {NAV.map((n) => (
+              <Link to="/" onClick={onClose} className="block py-3 text-lg font-serif border-b border-border/50">
+                Home
+              </Link>
+              <ShopNavLinks onNavigate={onClose} />
+              {NAV_MAIN.filter((n) => n.label !== "Home" && n.label !== "New Arrivals").map((n) => (
                 <Link
                   key={n.label}
                   to={n.to}
+                  search={"search" in n ? n.search : undefined}
                   onClick={onClose}
                   className="block py-3 text-lg font-serif border-b border-border/50"
                 >
@@ -188,11 +195,30 @@ function Navbar() {
               <button className="lg:hidden" onClick={() => setMenuOpen(true)} aria-label="Menu">
                 <Menu className="w-5 h-5" />
               </button>
-              <nav className="hidden lg:flex items-center gap-7 text-[13px] tracking-wide">
-                {NAV.slice(1, 6).map((n) => (
+              <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-[13px] tracking-wide">
+                <Link
+                  to="/shop"
+                  search={{ cat: "new" }}
+                  className="relative py-1 hover:text-ink transition-colors text-foreground/80
+                             after:absolute after:left-0 after:bottom-0 after:h-px after:w-0 after:bg-ink
+                             hover:after:w-full after:transition-all after:duration-300"
+                >
+                  New Arrivals
+                </Link>
+                <ShopNavMenu />
+                <Link
+                  to={customizedCategory.href}
+                  className="relative py-1 hover:text-ink transition-colors text-foreground/80
+                             after:absolute after:left-0 after:bottom-0 after:h-px after:w-0 after:bg-ink
+                             hover:after:w-full after:transition-all after:duration-300"
+                >
+                  Customize
+                </Link>
+                {NAV_MAIN.filter((n) => !["Home", "New Arrivals"].includes(n.label)).map((n) => (
                   <Link
                     key={n.label}
                     to={n.to}
+                    search={"search" in n ? n.search : undefined}
                     className="relative py-1 hover:text-ink transition-colors text-foreground/80
                                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0 after:bg-ink
                                hover:after:w-full after:transition-all after:duration-300"
@@ -210,7 +236,8 @@ function Navbar() {
               {BRAND.name}
             </Link>
 
-            <div className="flex items-center justify-end gap-4 md:gap-5">
+            <div className="flex items-center justify-end gap-3 sm:gap-4 md:gap-5">
+              <ThemeToggle />
               <button onClick={() => setSearchOpen(true)} aria-label="Search">
                 <Search className="w-5 h-5" />
               </button>
@@ -245,29 +272,61 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="mt-24 bg-ink text-cream">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-20 grid gap-10 sm:gap-12 grid-cols-2 md:grid-cols-4">
-        <div className="col-span-2 md:col-span-1">
+    <footer className="mt-24 bg-primary text-primary-foreground">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-20 grid gap-10 sm:gap-12 grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+        <div className="col-span-2 md:col-span-1 lg:col-span-1">
           <div className="font-serif text-xl sm:text-2xl md:text-3xl tracking-[0.12em] sm:tracking-[0.2em]">{BRAND.name}</div>
-          <p className="mt-4 text-sm text-cream/60 leading-relaxed max-w-xs">
+          <p className="mt-4 text-sm opacity-60 leading-relaxed max-w-xs">
             {BRAND.tagline} Crafted in small batches, shipped worldwide.
           </p>
+          <div className="mt-6 flex items-center gap-3">
+            <span className="text-xs uppercase tracking-[0.18em] opacity-70">Theme</span>
+            <ThemeToggle />
+          </div>
+        </div>
+        <div>
+          <div className="text-xs uppercase tracking-[0.2em] opacity-70 mb-4">Collections</div>
+          <ul className="space-y-2.5 text-sm">
+            {shopCategories.map((c) => (
+              <li key={c.slug}>
+                <Link to="/shop" search={{ cat: c.slug }} className="opacity-80 hover:opacity-100">
+                  {c.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link to={customizedCategory.href} className="opacity-80 hover:opacity-100">
+                {customizedCategory.name}
+              </Link>
+            </li>
+          </ul>
         </div>
         {[
-          { h: "Shop", l: ["New Arrivals", "Abayas", "Hijabs", "Jilbabs", "Naqab", "Sale"] },
-          { h: BRAND.name, l: ["Our Story", "Atelier", "Journal", "Sustainability"] },
-          { h: "Support", l: ["Contact", "Shipping", "Returns", "Size Guide", "FAQ"] },
+          { h: BRAND.name, links: [{ label: "Our Story", to: "/about" as const }, { label: "Contact", to: "/contact" as const }] },
+          {
+            h: "Support",
+            links: [
+              { label: "Contact", to: "/contact" as const },
+              { label: "Size Guide", to: "/shop" as const },
+            ],
+          },
         ].map((c) => (
           <div key={c.h}>
-            <div className="text-xs uppercase tracking-[0.2em] text-cream/70 mb-4">{c.h}</div>
+            <div className="text-xs uppercase tracking-[0.2em] opacity-70 mb-4">{c.h}</div>
             <ul className="space-y-2.5 text-sm">
-              {c.l.map((x) => <li key={x}><a href="#" className="text-cream/80 hover:text-cream">{x}</a></li>)}
+              {c.links.map((x) => (
+                <li key={x.label}>
+                  <Link to={x.to} className="opacity-80 hover:opacity-100">
+                    {x.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className="border-t border-cream/10">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-cream/50">
+      <div className="border-t border-primary-foreground/10">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs opacity-50">
           <span>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</span>
           <div className="flex gap-5"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
         </div>

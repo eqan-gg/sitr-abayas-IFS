@@ -5,12 +5,17 @@ import p4 from "@/assets/product-4.jpg";
 import p5 from "@/assets/product-5.jpg";
 import p6 from "@/assets/product-6.jpg";
 import editorial from "@/assets/editorial-1.jpg";
+import type { ProductCategory } from "@/lib/categories";
+import { shopCategories } from "@/lib/categories";
+
+export type { ProductCategory };
+export { shopCategories as categories };
 
 export type Product = {
   id: string;
   slug: string;
   title: string;
-  category: "abayas" | "hijabs" | "jilbabs" | "naqab" | "everyday";
+  category: ProductCategory;
   price: number;
   salePrice?: number;
   images: string[];
@@ -29,7 +34,7 @@ export const products: Product[] = [
     id: "1",
     slug: "sitr-open-abaya-camel",
     title: "Open Abaya — Camel",
-    category: "abayas",
+    category: "standard",
     price: 14800,
     salePrice: 11900,
     images: [p1, p2],
@@ -51,7 +56,7 @@ export const products: Product[] = [
     id: "2",
     slug: "luna-pearl-abaya-onyx",
     title: "Luna Pearl Abaya — Onyx",
-    category: "abayas",
+    category: "new",
     price: 16500,
     images: [p2, p1],
     description: "Pearl-button placket on a clean A-line silhouette. A quiet statement, made for everyday elegance.",
@@ -65,15 +70,15 @@ export const products: Product[] = [
   },
   {
     id: "3",
-    slug: "silk-hijab-blush",
-    title: "Mulberry Silk Hijab — Blush",
-    category: "hijabs",
-    price: 4200,
+    slug: "silk-trim-abaya-blush",
+    title: "Silk-Trim Abaya — Blush",
+    category: "premium",
+    price: 22400,
     images: [p3, p3],
-    description: "100% mulberry silk with a soft satin face and a barely-there hand-rolled hem.",
-    fabric: "100% mulberry silk, 19 momme",
-    care: "Hand wash with cold water and mild detergent.",
-    sizes: ["One Size"],
+    description: "Luxury nida abaya with mulberry silk trim at the cuffs. An elevated piece for special occasions.",
+    fabric: "Nida crepe with 100% mulberry silk trim",
+    care: "Dry clean only.",
+    sizes: ["S", "M", "L", "XL"],
     colors: [
       { name: "Blush", hex: "#f4c9c2" },
       { name: "Sand", hex: "#d8c6a8" },
@@ -84,30 +89,30 @@ export const products: Product[] = [
   },
   {
     id: "4",
-    slug: "amal-jilbab-olive",
-    title: "Amal Jilbab — Olive",
-    category: "jilbabs",
-    price: 13200,
+    slug: "campus-ease-abaya-olive",
+    title: "Campus Ease Abaya — Olive",
+    category: "university",
+    price: 11200,
     images: [p4, p1],
-    description: "A two-piece jilbab set with relaxed shoulders and a generous hood. Designed for movement.",
+    description: "Lightweight, easy-care abaya with side pockets — designed for long days on campus.",
     fabric: "Soft-touch jersey crepe",
     care: "Machine wash cold, gentle cycle.",
-    sizes: ["S", "M", "L"],
+    sizes: ["S", "M", "L", "XL"],
     colors: [{ name: "Olive", hex: "#5e6a3c" }, { name: "Charcoal", hex: "#2c2c2c" }],
     rating: 4.9,
     reviews: 144,
   },
   {
     id: "5",
-    slug: "embellished-naqab-charcoal",
-    title: "Embellished Naqab — Charcoal",
-    category: "naqab",
-    price: 3800,
+    slug: "celebration-abaya-charcoal",
+    title: "Celebration Abaya — Charcoal",
+    category: "wedding-guest",
+    price: 18900,
     images: [p5, p3],
-    description: "Featherweight chiffon naqab with a delicate hand-set crystal at the brow.",
-    fabric: "Silk chiffon",
-    care: "Hand wash cold.",
-    sizes: ["One Size"],
+    description: "Embellished cuffs and a refined drape — made for wedding gatherings and festive occasions.",
+    fabric: "Silk-blend nida with hand-set crystal detail",
+    care: "Dry clean recommended.",
+    sizes: ["S", "M", "L", "XL"],
     colors: [{ name: "Charcoal", hex: "#3a3a3e" }, { name: "Black", hex: "#0a0a0a" }],
     badge: "Limited",
     rating: 4.8,
@@ -115,14 +120,14 @@ export const products: Product[] = [
   },
   {
     id: "6",
-    slug: "everyday-tunic-rose",
-    title: "Everyday Tunic — Rose",
-    category: "everyday",
-    price: 6900,
-    salePrice: 5500,
+    slug: "weekend-flow-abaya-rose",
+    title: "Weekend Flow Abaya — Rose",
+    category: "casual",
+    price: 12900,
+    salePrice: 10500,
     images: [p6, p4],
-    description: "A long-line tunic with side pockets, made for ease over wide-leg trousers.",
-    fabric: "Stretch micro-twill",
+    description: "Relaxed A-line abaya with a soft drape — perfect for outings, shopping, and casual gatherings.",
+    fabric: "Stretch micro-twill nida",
     care: "Machine wash cold.",
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: [
@@ -134,15 +139,38 @@ export const products: Product[] = [
     rating: 4.7,
     reviews: 189,
   },
+  {
+    id: "7",
+    slug: "boardroom-line-abaya-stone",
+    title: "Boardroom Line Abaya — Stone",
+    category: "formal",
+    price: 17800,
+    images: [p2, p6],
+    description: "Structured shoulders and a clean front placket — polished modesty for work and formal settings.",
+    fabric: "Premium matte nida",
+    care: "Dry clean recommended.",
+    sizes: ["S", "M", "L", "XL"],
+    colors: [{ name: "Stone", hex: "#8a8174" }, { name: "Onyx", hex: "#1a1a1a" }],
+    rating: 4.9,
+    reviews: 121,
+  },
+  {
+    id: "8",
+    slug: "atelier-drape-abaya-ivory",
+    title: "Atelier Drape Abaya — Ivory",
+    category: "premium",
+    price: 26500,
+    images: [p1, p5],
+    description: "Exclusive atelier cut with hand-finished hem. Our finest fabric and most refined silhouette.",
+    fabric: "Italian-import nida with silk lining",
+    care: "Dry clean only.",
+    sizes: ["XS", "S", "M", "L"],
+    colors: [{ name: "Ivory", hex: "#f5f0e8" }, { name: "Pearl", hex: "#e8e4dc" }],
+    badge: "New",
+    rating: 5.0,
+    reviews: 54,
+  },
 ];
-
-export const categories = [
-  { slug: "abayas", name: "Abayas", image: p1 },
-  { slug: "hijabs", name: "Hijabs", image: p3 },
-  { slug: "jilbabs", name: "Jilbabs", image: p4 },
-  { slug: "naqab", name: "Naqab", image: p5 },
-  { slug: "everyday", name: "Everyday", image: p6 },
-] as const;
 
 export { editorial };
 

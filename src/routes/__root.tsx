@@ -11,6 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { Layout } from "@/components/Layout";
 import { StoreProvider } from "@/lib/store";
+import { ThemeProvider, themeInitScript } from "@/lib/theme";
 import { BRAND, pageTitle } from "@/lib/brand";
 
 function NotFoundComponent() {
@@ -99,8 +100,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
       </head>
       <body>
@@ -116,11 +118,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StoreProvider>
-        <Layout>
-          <Outlet />
-        </Layout>
-      </StoreProvider>
+      <ThemeProvider>
+        <StoreProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </StoreProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
