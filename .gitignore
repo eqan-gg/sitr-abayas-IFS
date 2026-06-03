@@ -20,6 +20,9 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Vercel build output (never commit — stale artifacts block fresh deploys)
+.vercel/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

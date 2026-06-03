@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -115,6 +116,28 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // #region agent log
+  useEffect(() => {
+    fetch("http://127.0.0.1:7614/ingest/5daa42c5-bb31-4ea6-8bf1-2fd56418232a", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "0bad3e" },
+      body: JSON.stringify({
+        sessionId: "0bad3e",
+        runId: "post-fix",
+        hypothesisId: "A",
+        location: "__root.tsx:RootComponent",
+        message: "App mounted with latest features",
+        data: {
+          hasThemeProvider: true,
+          categoryCount: 7,
+          buildMarker: "darkmode-categories-v1",
+        },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+  }, []);
+  // #endregion
 
   return (
     <QueryClientProvider client={queryClient}>

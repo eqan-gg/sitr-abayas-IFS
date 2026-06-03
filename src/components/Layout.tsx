@@ -25,7 +25,7 @@ const ANNOUNCEMENTS = [
 ];
 
 function AnnouncementBar() {
-  return ( <div>hello </div>
+  return (
     <div className="bg-primary text-primary-foreground text-[11px] tracking-[0.18em] uppercase overflow-hidden">
       <div className="flex marquee whitespace-nowrap py-2.5">
         {[...ANNOUNCEMENTS, ...ANNOUNCEMENTS].map((a, i) => (
