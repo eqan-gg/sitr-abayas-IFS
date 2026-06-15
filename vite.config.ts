@@ -8,10 +8,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { nitro } from "nitro/vite";
 
 const isVercel = process.env.VERCEL === "1";
+const isAzure = process.env.AZURE_ENV === "1";
 
 // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 // On Vercel, use Nitro's vercel preset instead of the Cloudflare worker output.
+// On Azure, use Nitro's node-server preset to run as a standalone Node.js server.
 export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
@@ -21,6 +23,13 @@ export default defineConfig({
         cloudflare: false,
         vite: {
           plugins: [nitro({ preset: "vercel" })],
+        },
+      }
+    : isAzure
+    ? {
+        cloudflare: false,
+        vite: {
+          plugins: [nitro({ preset: "node-server" })],
         },
       }
     : {}),
